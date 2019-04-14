@@ -23,9 +23,8 @@
         </div>
         <div class="row date-time-wrapper middle-lg">
           <footer class="col-xs grey-text light">
-            <span class="pull-left">
-              <span class="semi-bold">devo</span> is an
-              <a href="https://github.com/karakanb/devo">open source extension</a>.
+            <span class="pull-left footer-note">
+              fork of <a href="https://github.com/karakanb/devo">devo</a> by <a href="https://github.com/juangesino">@juangesino</a>
             </span>
             <span class="pull-right day-night-toggle">
               <font-awesome-icon :icon="['fas', 'sun']"></font-awesome-icon>
@@ -210,6 +209,10 @@ footer {
   height: 10vh;
   margin: 20px;
   text-align: center;
+}
+
+.footer-note {
+  font-size: 8pt;
 }
 
 footer a {
