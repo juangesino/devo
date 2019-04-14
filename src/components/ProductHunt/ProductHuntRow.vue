@@ -1,6 +1,7 @@
 <template>
   <div class="ph-item">
     <div class="row" style="display:flex">
+      <!--
       <div class="thumbnail">
         <div class="image-container">
           <img :src="thumbnailLink"
@@ -9,6 +10,7 @@
                height="80">
         </div>
       </div>
+      -->
       <div class="product-info">
         <div class="row title-row">
           <a :href="itemLink"> {{item.name}}</a>
@@ -16,34 +18,6 @@
         <h3 class="row description">
           {{item.tagline}}
         </h3>
-        <div class="row meta between-lg">
-          <span class="ph-tag-wrapper">
-            <span class="small-info-box link-box"
-                  v-if="topicExists">
-              <a :href="firstTopicLink">
-                {{item.topics[0].name}}
-              </a>
-            </span>
-            <span class="remaining-topic-count"
-                  v-if="remainingTopicCount > 0"
-                  :title="remainingTopics">+{{remainingTopicCount}}</span>
-          </span>
-          <span class="ph-action-wrapper">
-            <span class="small-info-box action vote-count white-background">
-              <span>
-                <font-awesome-icon :icon="['fas', 'chevron-up']"></font-awesome-icon>
-                {{item.votes_count}}
-              </span>
-            </span>
-            <span class="small-info-box action white-background">
-              <span>
-                <font-awesome-icon :icon="['fas', 'comment']"></font-awesome-icon>
-                {{item.comments_count}}
-              </span>
-            </span>
-          </span>
-
-        </div>
       </div>
     </div>
 
@@ -100,7 +74,6 @@ export default {
 <style>
 .ph-item {
   font-size: 16px;
-  padding: 16px 0;
   text-align: left;
   border-bottom: 1px solid #dfe3e8a8;
 }
@@ -137,15 +110,15 @@ export default {
 }
 
 .ph-item .title-row {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 300;
-  line-height: 32px;
+  line-height: 25px;
 }
 
 .ph-item .description {
   align-items: center;
   color: rgb(153, 153, 153);
-  font-size: 13px;
+  font-size: 9.33333px;
   font-weight: 400;
   line-height: 20px;
   margin-bottom: 5px;
