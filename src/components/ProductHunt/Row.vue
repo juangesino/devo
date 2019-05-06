@@ -4,38 +4,58 @@
       <!--
       <div class="thumbnail">
         <div class="image-container">
-          <img :src="thumbnailLink"
-          :srcset="`${thumbnailLink}&dpr=2 2x`"
-               width="80"
-               height="80">
+          <img :src="thumbnailLink" :srcset="`${thumbnailLink}&dpr=2 2x`" width="80" height="80" />
         </div>
       </div>
       -->
       <div class="product-info">
         <div class="row title-row">
-          <a :href="itemLink"> {{item.name}}</a>
+          <a :href="itemLink">{{ item.name }}</a>
         </div>
-        <h3 class="row description">
-          {{item.tagline}}
-        </h3>
+        <h3 class="row description">{{ item.tagline }}</h3>
+        <div class="row meta between-lg">
+          <span class="ph-tag-wrapper">
+            <span class="small-info-box link-box" v-if="topicExists">
+              <a :href="firstTopicLink">{{ item.topics[0].name }}</a>
+            </span>
+            <span
+              class="remaining-topic-count"
+              v-if="remainingTopicCount > 0"
+              :title="remainingTopics"
+            >+{{ remainingTopicCount }}</span>
+          </span>
+          <span class="ph-action-wrapper">
+            <span class="small-info-box action vote-count white-background">
+              <span>
+                <font-awesome-icon :icon="['fas', 'chevron-up']"></font-awesome-icon>
+                {{ item.votes_count }}
+              </span>
+            </span>
+            <span class="small-info-box action white-background">
+              <span>
+                <font-awesome-icon :icon="['fas', 'comment']"></font-awesome-icon>
+                {{ item.comments_count }}
+              </span>
+            </span>
+          </span>
+        </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ProductHuntRow',
+  name: "Row",
   props: {
     item: {
       required: true,
-      type: Object,
-    },
+      type: Object
+    }
   },
   data() {
     return {
-      baseUrl: 'https://www.producthunt.com',
+      baseUrl: "https://www.producthunt.com"
     };
   },
   computed: {
@@ -53,21 +73,21 @@ export default {
     },
     remainingTopics() {
       const topics = this.item.topics.slice(1);
-      return topics.map(e => this.toTitleCase(e.name)).join(', ');
+      return topics.map(e => this.toTitleCase(e.name)).join(", ");
     },
     itemLink() {
       return `${this.baseUrl}/posts/${this.item.slug}`;
-    },
+    }
   },
   methods: {
     toTitleCase(str) {
-      str = str.toLowerCase().split(' ');
+      str = str.toLowerCase().split(" ");
       for (let i = 0; i < str.length; i += 1) {
         str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
       }
-      return str.join(' ');
-    },
-  },
+      return str.join(" ");
+    }
+  }
 };
 </script>
 
@@ -251,7 +271,7 @@ export default {
 
 .product-info {
   flex: 1;
-  padding-left: .5rem;
-  padding-right: .5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 </style>

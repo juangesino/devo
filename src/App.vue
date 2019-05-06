@@ -1,31 +1,34 @@
 <template>
-  <div id="app" :class="{'night-mode': isNightMode}">
+  <div id="app" :class="{ 'night-mode': isNightMode }">
     <div class="row">
       <div class="col-lg-10 col-lg-offset-1">
         <div class="row date-time-wrapper middle-lg">
           <div class="col-xs date-time grey-text">
-            <div class="time inline-block">{{now}}</div>
-            <div class="date inline-block pull-right">{{today}}</div>
+            <div class="time inline-block">{{ now }}</div>
+            <div class="date inline-block pull-right">{{ today }}</div>
           </div>
         </div>
         <div class="row cards-wrapper">
           <div class="col-lg-6 col-xs-10 col-xs-offset-1 col-lg-offset-0 left-pane">
-            <git-hub></git-hub>
+            <platform-card platform="github" :cardIndex="0"></platform-card>
           </div>
           <div class="col-lg-6 col-xs-10 col-xs-offset-1 col-lg-offset-0">
             <div class="row" style="height: 39vh; margin-bottom: 1vh;">
-              <hacker-news></hacker-news>
+              <platform-card platform="hackernews" :cardIndex="1"></platform-card>
             </div>
             <div class="row" style="height: 40vh;">
-              <product-hunt></product-hunt>
+              <platform-card platform="producthunt" :cardIndex="2"></platform-card>
             </div>
           </div>
         </div>
         <div class="row date-time-wrapper middle-lg">
           <footer class="col-xs grey-text light">
             <span class="pull-left footer-note">
-              fork of <a href="https://github.com/karakanb/devo">devo</a> by <a href="https://github.com/juangesino">@juangesino</a>
+              fork of
+              <a href="https://github.com/karakanb/devo">devo</a> by
+              <a href="https://github.com/juangesino">@juangesino</a>
             </span>
+
             <span class="pull-right day-night-toggle">
               <font-awesome-icon :icon="['fas', 'sun']"></font-awesome-icon>
               <toggle-switch v-model="nightModeToggle" style="margin-right: 8px"></toggle-switch>
@@ -39,25 +42,21 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import GitHub from '@/components/GitHub/GitHub.vue';
-import Card from './components/Card.vue';
-import HackerNews from './components/HackerNews/HackerNews.vue';
-import ProductHunt from './components/ProductHunt/ProductHunt.vue';
-import ToggleSwitch from './components/ToggleSwitch.vue';
+import { mapState, mapActions } from "vuex";
+import Card from "./components/Card.vue";
+import ToggleSwitch from "./components/ToggleSwitch.vue";
+import PlatformCard from "./components/PlatformCard.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Card,
-    HackerNews,
-    GitHub,
-    ProductHunt,
     ToggleSwitch,
+    PlatformCard
   },
   data() {
     return {
-      nowTime: new Date(),
+      nowTime: new Date()
     };
   },
   created() {
@@ -67,19 +66,22 @@ export default {
   },
   computed: {
     now() {
-      return `${this.nowTime
+      const hour = this.nowTime
         .getHours()
         .toString()
-        .padStart(2, '0')}:${this.nowTime
+        .padStart(2, "0");
+      const minute = this.nowTime
         .getMinutes()
         .toString()
-        .padStart(2, '0')}`;
+        .padStart(2, "0");
+
+      return `${hour}:${minute}`;
     },
     today() {
       return this.formatDate(this.nowTime);
     },
     ...mapState({
-      isNightMode: state => state.settings.is_night_mode,
+      isNightMode: state => state.settings.isNightMode
     }),
 
     nightModeToggle: {
@@ -88,34 +90,34 @@ export default {
       },
       set(value) {
         this.setNightMode(value);
-      },
-    },
+      }
+    }
   },
   methods: {
     formatDate(date) {
       const monthNames = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
       ];
 
       const days = [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
       ];
 
       const day = date.getDate();
@@ -123,8 +125,8 @@ export default {
       return `${days[date.getDay()]}, ${monthNames[monthIndex]} ${day}`;
     },
 
-    ...mapActions(['setNightMode']),
-  },
+    ...mapActions(["setNightMode", "updateGitHub"])
+  }
 };
 </script>
 
@@ -134,8 +136,8 @@ body {
 }
 #app {
   background-color: #f5f7fa;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
@@ -145,16 +147,32 @@ body {
   background-color: #25292f;
 }
 
+.round-borders {
+  border-radius: 4px;
+}
+
+.with-shadow {
+  box-shadow: 0 2px 8px 0 rgba(70, 73, 77, 0.16);
+}
+
+.night-mode .with-shadow {
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.25);
+}
+
 .card {
   border-radius: 4px;
   -webkit-border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 2px 8px 0 rgba(70, 73, 77, 0.16);
 }
 
 .day-night-toggle {
   display: flex;
   align-items: center;
+}
+
+.day-night-toggle svg {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .pull-right {
